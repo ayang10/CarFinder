@@ -358,28 +358,6 @@
                                     </div>
 
 
-                                <!--Begine row for json-->
-                                    <div class="row">
-                                        <!--creating panel-->
-                                        <div class="panel " style="color:black">
-                                            <div class="panel-heading" style="color:black">
-                                                <h3 class="panel-title text-center">
-                                                    <!--if iscollapsed is true, it return faults/if it's faults it return true-->
-                                                    <a href="" ng-click="isCollapsedTwo = !isCollapsedTwo">
-                                                        <!--Results.length helps display the amount in the array-->
-                                                        <span class="white bold">RawJSON</span>
-
-                                                    </a>
-                                                </h3>
-                                            </div>
-
-                                            <div uib-collapse="isCollapsedTwo">
-                                                <pre>{{ carData | json }}</pre> <!--call json in carData-->
-
-                                            </div>
-                                        </div>
-                                    </div> <!--End row for json-->
-
                                     <!--Start row for Recalls-->
                                     <div class="row">
                                         <!--creating panel-->                              <!--only if there is result, so more then 0 results found-->
@@ -479,16 +457,10 @@
                                             <h2 class="animated fadeInDownBig animation-delay-5  crousel-subtitle">Where everything you need to know about car is found</h2>
                                             <ul class="list-unstyled carousel-list">
                                                 <li class="animated bounceInLeft animation-delay-11">
-                                                    <i class="fa fa-check"></i>Find year
-                                                </li>
-                                                <li class="animated bounceInLeft animation-delay-13">
-                                                    <i class="fa fa-check"></i>Find make
+                                                    <i class="fa fa-check"></i>Find year, Find make
                                                 </li>
                                                 <li class="animated bounceInLeft animation-delay-15">
-                                                    <i class="fa fa-check"></i>Find model
-                                                </li>
-                                                <li class="animated bounceInLeft animation-delay-15">
-                                                    <i class="fa fa-check"></i>Find trim
+                                                    <i class="fa fa-check"></i>Find model, Find trim
                                                 </li>
                                             </ul>
                                             <p class="animated fadeInUpBig animation-delay-17">We are not responsible for false information, due to updated view.</p>
@@ -582,40 +554,63 @@
             </div>
         </section> <!-- carousel -->
 
-        <section class="margin-bottom">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="content-box box-default animated fadeInUp animation-delay-10">
-                            <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><i class="fa fa-car"></i></span>
-                            <h4 class="content-box-title ">Dream Car</h4>
-                            <p>A way to find information about car before you decide on what to buy</p>
+                <section class="margin-bottom">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="right-line">Powered By:</h2>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="content-box box-default animated fadeInUp animation-delay-14">
-                            <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><i class="fa fa-info"></i></span>
-                            <h4 class="content-box-title">Information</h4>
-                            <p>Easy to search and fun to experience</p>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><i class="fa fa-html5"></i></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">HTML5</h3>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="content-box box-default animated fadeInUp animation-delay-16">
-                            <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><i class="fa fa-credit-card"></i></span>
-                            <h4 class="content-box-title">Free App</h4>
-                            <p>This is app is free to the public with no charge.  Our intention is to help everyone search for desired car informations</p>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><i class="fa fa-contao"></i></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">C#</h3>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="content-box box-default animated fadeInUp animation-delay-12">
-                            <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><i class="fa fa-smile-o"></i></span>
-                            <h4 class="content-box-title">Happy Searching</h4>
-                            <p>Enjoy a free and informational app</p>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><i class="fa fa-square-o"></i></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">SQL</h3>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><img src="assets/img/ang.png"></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">AngularJS</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><i class="fa fa-simplybuilt"></i></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">Web API</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="text-icon wow fadeInUp">
+                                <span class="icon-ar icon-ar-lg"><i class="fa fa-css3"></i></span>
+                                <div class="text-icon-content">
+                                    <h3 class="no-margin">CSS3</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- row -->
+                </section>
+            </div> <!-- container -->
     
 
     </div> <!-- boxed -->
