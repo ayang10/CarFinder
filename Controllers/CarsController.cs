@@ -250,14 +250,33 @@ namespace CarFinder.Controllers
             //extract the properties need for the images
             List<string> images = new List<string>();
 
+           
             //for each results in this collection
             foreach (var result in imageResults)
             {
-                //insert new images
-                HttpWebResponse response = null;
-                var request = (HttpWebRequest)WebRequest.Create(result.MediaUrl);
-                request.Method = "HEAD";
+                if (UrlCtrl.IsUrl(result.MediaUrl))
+                {
+                    images.Add(result.MediaUrl);
+                  
+                }
+                else
+                {
+                    continue;
+                }
+                
+            }
+            //matching and converting into strings.
+            return images.ToArray();
+        }
 
+      public static class UrlCtrl
+        {
+            public static bool IsUrl(string path)
+            {
+                HttpWebResponse response = null;
+                var request = (HttpWebRequest)WebRequest.Create(path);
+                request.Method = "HEAD";
+                bool result = true;
 
                 try
                 {
@@ -265,30 +284,20 @@ namespace CarFinder.Controllers
                 }
                 catch (WebException ex)
                 {
-                    /* A WebException will be thrown if the status of the response is not `200 OK` */
+                    /*A WebException will be thrown if the status of the response is not '200 OK' */
+                    result = false;
                 }
                 finally
                 {
-                    
+                    // Don't forget to close your response.
                     if (response != null)
                     {
-                        images.Add(result.MediaUrl);
-                    }
-                    else
-                    {
-                        images.Remove(result.MediaUrl);
+                        response.Close();
                     }
                 }
-
-
-
-
+                return result;
             }
-            //matching and converting into strings.
-            return images.ToArray();
         }
-
-      
 
 
 

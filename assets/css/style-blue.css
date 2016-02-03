@@ -2002,12 +2002,13 @@ a > .icon-ar.icon-ar-inverse:hover {
 }
 .modal-body.no-padding {
   padding: 0;
+
 }
 .moda-title {
   font-weight: 400;
 }
 .modal-lg{
-    width: 2000px;
+    width: 1000px;
 
 }
 .modal-open #sb-site {

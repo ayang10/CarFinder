@@ -17,8 +17,8 @@
         
 
 
-        $scope.myInterval = 4500;
-        $scope.wrapSliders = 5500;
+        $scope.myInterval = 4000;
+        $scope.wrapSliders = 4000;
 
         $scope.isCollapsed = true;
         $scope.isCollapsedTwo = true;
