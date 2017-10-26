@@ -511,7 +511,7 @@
             <param name="model"></param>
             <returns>IEnumerable list of years, makes, models, and trims</returns>
         </member>
-        <member name="M:CarFinder.Controllers.CarsController.GetMatchingYearMakeModelAndTrim(System.String,System.String,System.String)">
+        <member name="M:CarFinder.Controllers.CarsController.GetMatchingYearMakeModelAndTrim(System.String,System.String,System.String,System.String)">
             <summary>
             This action retrieves a list of car available in years, makes, models, and trims
             </summary>

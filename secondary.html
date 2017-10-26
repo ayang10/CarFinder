@@ -1,0 +1,659 @@
+﻿Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @ayang10
+ Sign out
+ Unwatch 1
+  Star 0  Fork 0 ayang10/CarFinder
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+Branch: master Find file Copy pathCarFinder/index.html
+853c76b  on Feb 3, 2016
+@ayang10 ayang10 Updated carfinder
+1 contributor
+RawBlameHistory
+641 lines (540 sloc)  38.7 KB
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>CarFinder Information</title>
+
+    <link rel="shortcut icon" href="assets/img/smallcar.png" />
+
+    <meta name="description" content="">
+
+    <!-- CSS -->
+    <link href="assets/css/preload.css" rel="stylesheet">
+
+    <!-- Compiled in vendors.js -->
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/slidebars.min.css" rel="stylesheet">
+    <link href="assets/css/lightbox.css" rel="stylesheet">
+    <link href="assets/css/jquery.bxslider.css" rel="stylesheet" />
+    <link href="assets/css/buttons.css" rel="stylesheet">
+
+
+    <link href="assets/css/vendors.css" rel="stylesheet">
+    <link href="assets/css/syntaxhighlighter/shCore.css" rel="stylesheet">
+
+    <link href="assets/css/style-blue.css" rel="stylesheet" title="default">
+    <link href="assets/css/width-full.css" rel="stylesheet" title="default">
+
+
+</head>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
+<body>
+
+
+    <div id="sb-site">
+        <div class="boxed">
+
+
+            <nav class="navbar navbar-default navbar-header-full yamm navbar-static-top " role="navigation" id="header">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="#">Menu</a>
+                        </div> <!-- navbar-header -->
+                        <div class="col-md-9">
+                            <center>
+                                <h1 style="color:black">
+                                    <img src="assets/img/smallcar.png" alt="" style="width:90px;height:50px;">
+                                    <b>CarFinder Information</b>
+                                </h1>
+                            </center>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Help">API</a>
+                                    </li>
+                                    <li>
+                                        <a href="aboutcarfinder.html">About</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div><!-- container -->
+            </nav><!-- navbar-collapse -->
+            <br />
+
+
+
+            <div id="start" class="container" ng-app="CarFinderApp">
+                <!--Check and find CarFinderApp-->
+                <div ng-controller="CarFinderAppController">
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <!--HTML select elements for the dropdowns-->  <!--ng-model stores the selection--> <!--Set year to each instance of years-->
+                            <select id="yearSelection" class="form-control" ng-model="selectedYear" ng-options="year for year in years" ng-change="getMakes()">
+                                <option value="" disabled> Select year </option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            <select id="makeSelection" class="form-control" ng-model="selectedMake" ng-options="make for make in makes" ng-change="getModels()">
+                                <option value="" disabled> Select make </option>
+                            </select>
+
+
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="modelSelection" class="form-control" ng-model="selectedModel" ng-options="model for model in models" ng-change="getTrims()">
+                                <option value="" disabled> Select model </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            <select id="trimSelection" class="form-control" ng-model="selectedTrim" ng-options="trim for trim in trims">
+                                <option value="" disabled> Select trim </option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <a class="btn btn-lg btn-primary" href="#getCarInfo" data-toggle="modal" ng-click="getCar()" style="float: right;">Search</a>
+
+                    </div>
+
+                    <!--Hidden DIV containing car data results-->
+
+                    <div class="modal fade" id="getCarInfo" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                    <!--if carData is null then hide everything, create a loop for carData.cars-->
+                                    <div id="carInfo" class="" ng-hide="carData == null" ng-repeat="allCar in carData.cars">
+
+
+
+                                        <h2 class="row text-center">
+                                            <!--Insert car heading here-->
+                                            <b>{{allCar.model_year}} {{allCar.make}} {{allCar.model_name}} {{allCar.model_trim}}</b>
+                                        </h2>
+                                        <br />
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+
+                                                <!--property labels-->
+                                                <div class="row" ng-show="allCar.model_trim !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Trim:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.model_trim}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="allCar.body_style !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Body Style:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.body_style}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_position !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Position:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_position}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.body_style !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Body Style:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.body_style}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_cc !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Engine CC:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_cc}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_num_cyl !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Cylinder:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_num_cyl}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_type !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Engine Type:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_type}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_power_ps !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Power PS:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_power_ps}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_cc !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng CC:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_cc}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_power_rpm !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Power RPM:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_power_rpm}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_torque_nm !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Torque NM:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_torque_nm}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_compression !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Compres:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_compression}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.engine_fuel !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng Fuel:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.engine_fuel}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.top_speed_kph !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Top Speed KPH:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.top_speed_kph}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.zero_to_100_kph !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Zero to 100 Kph:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.zero_to_100_kph}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.drive_type !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Drive type:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.drive_type}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.transmission_type !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Trans Type:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.transmission_type}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.seats !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Seats:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.seats}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.doors !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Doors:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.doors}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.weight_kg !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Weight Kg:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.weight_kg}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.wheelbase !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Eng CC:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.wheelbase}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.lkm_hwy !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">lkm Hwy:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{235.2145833/allCar.lkm_hwy | number:0}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.lkm_mixed !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">lkm MIXED:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{235.2145833/allCar.lkm_mixed | number:0}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.lkm_city !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">lkm City:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.lkm_city}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="allCar.fuel_capacity_l !=''">
+                                                    <div class="col-md-4 col-md-offest-1 test-primary text-right">Fuel Cap:</div>
+                                                    <div class="col-md-7" style="color:red">
+                                                        {{allCar.fuel_capacity_l}}
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <!---- <br />
+                                                Recalls:<br /> -->
+
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <!--property -->
+                                                <!--put image function here-->
+                                                <!--Set up an image carousel using UI-Bootstrap for angular
+                                                to manage the sequence animation we reuire two additional $scope variables,
+                                                one to handle the slide change interval, one to say whether to wrap the slide or not-->
+
+                                                <uib-carousel interval="myInterval" no-wrap="!wrapSliders">
+                                                    <uib-slide ng-repeat="image in carData.imageURLs">
+                                                        <img class="img-thumbnail" ng-src="{{image}}" alt="" width="500" height="200">
+                                                    </uib-slide>
+                                                </uib-carousel>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <br />
+
+                                    </div>
+
+
+                                    <!--Start row for Recalls-->
+                                    <div class="row">
+                                        <!--creating panel-->                              <!--only if there is result, so more then 0 results found-->
+                                        <div class="panel panel-warning-dark" ng-show="carData.recalls.Results.length > 0">
+                                            <div class="panel-heading panel-success-dark">
+                                                <h3 class="panel-title text-center">
+                                                    <!--if iscollapsed is true, it return faults/if it's faults it return true-->
+                                                    <a href="" ng-click="isCollapsed = !isCollapsed">
+
+                                                        <!--Results.length helps display the amount in the array-->
+                                                        <span class="white bold">View Recalls&nbsp;&nbsp;({{carData.recalls.Results.length}})</span> <!--numbers of recalls-->
+
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <div uib-collapse="isCollapsed">
+
+                                                <div class="panel-body">
+                                                    <div ng-repeat="recall in carData.recalls.Results">
+                                                        <br />
+                                                        <div class="bold" ng-show="recall.Manufacturer != null">
+                                                            <div class="col-sm-3 text-primary text-right" style="color:red">
+                                                                <b>Manufacturer:</b>
+                                                            </div>
+                                                            <div class="col-sm-9 text-left">{{recall.Manufacturer}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.NHTSACampaignNumber != null">
+                                                            <div class="col-sm-3 text-primary text-right">NHTSACampaignNumber:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.NHTSACampaignNumber}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.ResportReceivedDate != null">
+                                                            <div class="col-sm-3 text-primary text-right">ResportReceivedDate:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.ResportReceivedDate}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.Component != null">
+                                                            <div class="col-sm-3 text-primary text-right">Component:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.Component}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.Summary != null">
+                                                            <div class="col-sm-3 text-primary text-right">Summary:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.Summary}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.Conequence != null">
+                                                            <div class="col-sm-3 text-primary text-right">Conequence:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.Conequence}}</div>
+                                                        </div>
+                                                        <div class="bold" ng-show="recall.Remedy != null">
+                                                            <div class="col-sm-3 text-primary text-right">Remedy:</div>
+                                                            <div class="col-sm-9 text-left">{{recall.Remedy}}</div>
+                                                        </div>
+                                                        <br />
+                                                    </div>
+
+
+                                                </div>
+                                                <!--end of panel-->
+
+                                            </div><!--end iscollapse-->
+                                        </div> <!--end panel-->
+                                    </div> <!--End row-->
+
+                                </div> <!--Car info-->
+
+                                <div class="modal-footer">
+                                    <a class="btn btn-default" data-dismiss="modal">Close</a>
+                                </div>
+
+                            </div><!--End of modal-header-->
+                        </div><!--end of modal-content-->
+                    </div><!--end of modal-dialog-->
+                </div> <!--end of modal-->
+
+
+            </div>
+
+
+            <br />
+
+            <section class="carousel-section">
+                <div id="carousel-example-generic" class="carousel carousel-razon slide" data-ride="carousel" data-interval="4500">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-7">
+                                        <div class="carousel-caption">
+                                            <div class="carousel-text">
+                                                <h1 class="animated fadeInDownBig animation-delay-7 carousel-title">Find your dream car information</h1>
+                                                <h2 class="animated fadeInDownBig animation-delay-5  crousel-subtitle">Where everything you need to know about car is found</h2>
+                                                <ul class="list-unstyled carousel-list">
+                                                    <li class="animated bounceInLeft animation-delay-11">
+                                                        <i class="fa fa-check"></i>Find year, Find make
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-15">
+                                                        <i class="fa fa-check"></i>Find model, Find trim
+                                                    </li>
+                                                </ul>
+                                                <p class="animated fadeInUpBig animation-delay-17">We are not responsible for false information, due to updated view.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-5 hidden-xs carousel-img-wrap">
+                                        <div class="carousel-img">
+                                            <img src="assets/img/exotic.png" class="img-responsive animated bounceInUp animation-delay-3" alt="Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-8">
+                                        <div class="carousel-caption">
+                                            <div class="carousel-text">
+                                                <h1 class="animated fadeInDownBig animation-delay-7 carousel-title">Numerous of Cars information</h1>
+                                                <h2 class="animated fadeInDownBig animation-delay-5  crousel-subtitle">How to Find</h2>
+                                                <ul class="list-unstyled carousel-list">
+                                                    <li class="animated bounceInLeft animation-delay-11">
+                                                        <i class="fa fa-check"></i>Define year of car
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-13">
+                                                        <i class="fa fa-check"></i>Define make of car
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-15">
+                                                        <i class="fa fa-check"></i>Define model of car
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-15">
+                                                        <i class="fa fa-check"></i>Define trim of car
+                                                    </li>
+                                                </ul>
+                                                <p class="animated fadeInUpBig animation-delay-17">We are not responsible for false information, due to updated view.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-4 hidden-xs carousel-img-wrap">
+                                        <div class="carousel-img">
+                                            <img src="assets/img/xcar.jpg" class="img-responsive animated bounceInUp animation-delay-3" alt="Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-7 col-sm-9">
+                                        <div class="carousel-caption">
+                                            <div class="carousel-text">
+                                                <h1 class="animated fadeInDownBig animation-delay-7 carousel-title">Many Cars you can find</h1>
+                                                <h2 class="animated fadeInDownBig animation-delay-5  crousel-subtitle">The beauty of a car</h2>
+                                                <ul class="list-unstyled carousel-list">
+                                                    <li class="animated bounceInLeft animation-delay-11">
+                                                        <i class="fa fa-check"></i>What do you like in a car
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-13">
+                                                        <i class="fa fa-check"></i>Information never seen before
+                                                    </li>
+                                                    <li class="animated bounceInLeft animation-delay-15">
+                                                        <i class="fa fa-check"></i>The only place for real information
+                                                    </li>
+                                                </ul>
+                                                <p class="animated fadeInUpBig animation-delay-17">We are not responsible for false information, due to updated view.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-5 col-sm-3 hidden-xs carousel-img-wrap">
+                                        <div class="carousel-img">
+                                            <img src="assets/img/racecar.png" class="img-responsive animated bounceInUp animation-delay-3" alt="Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </section> <!-- carousel -->
+
+
+
+            <div class="col-md-6 pull-right">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-6"><img src="assets/img/angularjs.png" alt="" class="img-responsive"></div>
+                    <div class="col-md-3 col-sm-3 col-xs-6"><img src="assets/img/api.png" alt="" class="img-responsive"></div>
+                    <div class="col-md-3 col-sm-3 col-xs-6"><img src="assets/img/c-sharp.gif" alt="" class="img-responsive"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-6"><img src="assets/img/languages.png" alt="" class="img-responsive"></div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-6"><img src="assets/img/sql.png" alt="" class="img-responsive"></div>
+                </div>
+            </div>
+
+        </div> <!-- boxed -->
+    </div> <!-- sb-site -->
+
+    <footer id="footer">
+        <p>
+            &copy; 2015
+            <a href="#">A Yang</a>, inc. All rights reserved.
+        </p>
+    </footer>
+
+
+
+
+
+
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-resource.min.js"></script>
+    <script src="Scripts/angular-animate.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="NgApp/app.js"></script>
+    <script src="NgApp/Controllers/CarFinderAppController.js"></script>
+
+    <!--Beging Js files-->
+
+
+    <script src="dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+
+
+    <!-- Compiled in vendors.js -->
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap-switch.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/slidebars.min.js"></script>
+    <script src="assets/js/jquery.bxslider.min.js"></script>
+    <script src="assets/js/holder.js"></script>
+    <script src="assets/js/buttons.js"></script>
+    <script src="assets/js/jquery.mixitup.min.js"></script>
+    <script src="assets/js/circles.min.js"></script>
+    <script src="assets/js/masonry.pkgd.min.js"></script>
+    <script src="assets/js/jquery.matchHeight-min.js"></script>
+
+
+    <script src="assets/js/vendors.js"></script>
+
+    <!-- Syntaxhighlighter -->
+    <script src="assets/js/syntaxhighlighter/shCore.js"></script>
+    <script src="assets/js/syntaxhighlighter/shBrushXml.js"></script>
+    <script src="assets/js/syntaxhighlighter/shBrushJScript.js"></script>
+
+    <script src="assets/js/DropdownHover.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/holder.js"></script>
+    <script src="assets/js/index.js"></script>
+
+</body>
+</html>
+

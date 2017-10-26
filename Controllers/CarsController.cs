@@ -107,21 +107,21 @@ namespace CarFinder.Controllers
         /// <param name="trim"></param>
         /// <returns>Returns a list of car objects</returns>
 
-        [ActionName("Cars")]
-        public async Task<IHttpActionResult> GetMatchingYearMakeModelAndTrim(string year, string make, string model)
-        {
-            var carData = new CarData();
+        //[ActionName("Cars")]
+        //public async Task<IHttpActionResult> GetMatchingYearMakeModelAndTrim(string year, string make, string model)
+        //{
+        //    var carData = new CarData();
 
-            carData.cars = await db.Database.SqlQuery<Car>("EXEC GetMatchingYearMakeModelAndTrim @year, @make, @model",
-                new SqlParameter("year", year),
-                new SqlParameter("make", make),
-                new SqlParameter("model", model)).ToListAsync();
-            carData.recalls = GetRecalls(year, make, model);
+        //    carData.cars = await db.Database.SqlQuery<Car>("EXEC GetMatchingYearMakeModelAndTrim @year, @make, @model",
+        //        new SqlParameter("year", year),
+        //        new SqlParameter("make", make),
+        //        new SqlParameter("model", model)).ToListAsync();
+        //    carData.recalls = GetRecalls(year, make, model);
 
            
-            return Ok(carData);
+        //    return Ok(carData);
 
-        }
+        //}
 
 
 
@@ -141,7 +141,7 @@ namespace CarFinder.Controllers
 
             carData.recalls = GetRecalls(year, make, model);
             //string imageURLs
-            carData.imageURLs = GetImages(year, make, model, trim);
+            //carData.imageURLs = GetImages(year, make, model, trim);
                 return Ok(carData);
             
         }
