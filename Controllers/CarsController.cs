@@ -186,88 +186,90 @@ namespace CarFinder.Controllers
         }
 
         /* This class will get images for year, make, and model */
-        private string[] GetImages(string year, string make, string model)
-        {
-            // This is the query - or you could get it from args.
-            string query = year + " " + make + " " + model;
+        //private string[] GetImages(string year, string make, string model)
+        //{
+        //    // This is the query - or you could get it from args.
+        //    string query = year + " " + make + " " + model;
 
-            // Create a Bing container.
-            string rootUri = "https://api.datamarket.azure.com/Bing/Search";
+        //    // Create a Bing container.
+        //    string rootUri = "https://api.datamarket.azure.com/Bing/Search";
 
-            var bingContainer = new Bing.BingSearchContainer(new Uri(rootUri));
+        //    var bingContainer = new Bing.BingSearchContainer(new Uri(rootUri));
 
-            // Replace this value with your account key.
-            var accountKey = "B7fUsZ3RushD0tSHsGmJfD2UywS5m4cpIlJ9v5Uca/M=";
+        //    // Replace this value with your account key.
+        //    var accountKey = "B7fUsZ3RushD0tSHsGmJfD2UywS5m4cpIlJ9v5Uca/M=";
 
-            // Configure bingContainer to use your credentials.
-            bingContainer.Credentials = new NetworkCredential("accountKey", accountKey);
+        //    // Configure bingContainer to use your credentials.
+        //    bingContainer.Credentials = new NetworkCredential("accountKey", accountKey);
 
-            // Build the query.
-            var imageQuery = bingContainer.Image(query, null, null, null, null, null, null);
+        //    // Build the query.
+        //    var imageQuery = bingContainer.Image(query, null, null, null, null, null, null);
 
-            imageQuery = imageQuery.AddQueryOption("$top", 5);
-            var imageResults = imageQuery.Execute();
+        //    imageQuery = imageQuery.AddQueryOption("$top", 5);
+        //    var imageResults = imageQuery.Execute();
 
-            //extract the properties need for the images
-            List<string> images = new List<string>();
+        //    //extract the properties need for the images
+        //    List<string> images = new List<string>();
 
-            //for each results in this collection
-            foreach (var result in imageResults)
-            {
-                //insert new images
-                //if else statement to handle img error
-                images.Add(result.MediaUrl);
+        //    //for each results in this collection
+        //    foreach (var result in imageResults)
+        //    {
+        //        //insert new images
+        //        //if else statement to handle img error
+        //        images.Add(result.MediaUrl);
 
 
-            }
-            //matching and converting into strings.
-            return images.ToArray();
-        }
+        //    }
+        //    //matching and converting into strings.
+        //    return images.ToArray();
+        //}
 
         /* This class will get images for year, make, and model */
-        private string[] GetImages(string year, string make, string model, string trim)
-        {
+        //private string[] GetImages(string year, string make, string model, string trim)
+        //{
+            
             // This is the query - or you could get it from args.
-            string query = year + " " + make + " " + model + " " + trim;
+            //string query = year + " " + make + " " + model + " " + trim;
 
-            // Create a Bing container.
-            string rootUri = "https://api.datamarket.azure.com/Bing/Search";
+            //// Create a Bing container.
+            //string rootUri = "https://api.datamarket.azure.com/Bing/Search";
 
-            var bingContainer = new Bing.BingSearchContainer(new Uri(rootUri));
+            //var bingContainer = new Bing.BingSearchContainer(new Uri(rootUri));
 
-            // Replace this value with your account key.
-            var accountKey = "B7fUsZ3RushD0tSHsGmJfD2UywS5m4cpIlJ9v5Uca/M=";
+            //// Replace this value with your account key.
+            //var accountKey = "B7fUsZ3RushD0tSHsGmJfD2UywS5m4cpIlJ9v5Uca/M=";
 
-            // Configure bingContainer to use your credentials.
-            bingContainer.Credentials = new NetworkCredential("accountKey", accountKey);
+            //// Configure bingContainer to use your credentials.
+            //bingContainer.Credentials = new NetworkCredential("accountKey", accountKey);
 
-            // Build the query.
-            var imageQuery = bingContainer.Image(query, null, null, null, null, null, null);
+            //// Build the query.
+            //var imageQuery = bingContainer.Image(query, null, null, null, null, null, null);
 
-            imageQuery = imageQuery.AddQueryOption("$top", 5);
-            var imageResults = imageQuery.Execute();
+            //imageQuery = imageQuery.AddQueryOption("$top", 5);
+            //var imageResults = imageQuery.Execute();
 
-            //extract the properties need for the images
-            List<string> images = new List<string>();
+            ////extract the properties need for the images
+            //List<string> images = new List<string>();
 
-           
-            //for each results in this collection
-            foreach (var result in imageResults)
-            {
-                if (UrlCtrl.IsUrl(result.MediaUrl))
-                {
-                    images.Add(result.MediaUrl);
-                  
-                }
-                else
-                {
-                    continue;
-                }
-                
-            }
-            //matching and converting into strings.
-            return images.ToArray();
-        }
+
+            ////for each results in this collection
+            //foreach (var result in imageResults)
+            //{
+            //    if (UrlCtrl.IsUrl(result.MediaUrl))
+            //    {
+            //        images.Add(result.MediaUrl);
+
+            //    }
+            //    else
+            //    {
+            //        continue;
+            //    }
+
+            //}
+            ////matching and converting into strings.
+            //return images.ToArray();
+
+        //}
 
       public static class UrlCtrl
         {

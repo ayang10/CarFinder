@@ -122,7 +122,7 @@
 
         $scope.getCar = function () {
 
-            if ($scope.selectedModel != null) {
+            if ($scope.selectedTrim != null) {
 
                 $scope.carData = null;
                 $scope.showCarDataLoadingMessage = true;
@@ -138,6 +138,16 @@
                 if ($scope.selectedTrim != "") {
                     options.params.trim = $scope.selectedTrim;
                 }
+
+                var search = $scope.selectedYear + " " + $scope.selectedMake + " " + $scope.selectedModel;
+
+                $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=" + search + "&format=json&jsoncallback=JSON_CALLBACK").
+                    success(function (data) {
+                      $scope.images = data.items;
+                    }).
+                    error(function (data) {
+                      $scope.images = "Request failed";
+                });
 
                 $http.get('api/Cars/Cars', options).then(function (response) {
                     $scope.carData = response.data;

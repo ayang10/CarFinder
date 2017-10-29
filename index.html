@@ -288,7 +288,82 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="loadingMessage" ng-show="!images.length" style="">
+                                Sorry No Images for this car..
+                            </div>
+                            <uib-carousel interval="myInterval" no-wrap="!wrapSliders">
+                                <uib-slide ng-repeat="image in images | limitTo: 5">
+                                    <img class="img-thumbnail" ng-src="{{image.media.m}}" title="{{image.title}}" alt="" width="500" height="200">
+
+                                </uib-slide>
+                            </uib-carousel>
+
+
+                        </div>
                     </div>
+                    <!--Start row for Recalls-->
+                    <div class="row">
+                        <!--creating panel-->                              <!--only if there is result, so more then 0 results found-->
+                        <div class="panel panel-warning-dark" ng-show="carData.recalls.Results.length > 0">
+                            <div class="panel-heading panel-success-dark">
+                                <h3 class="panel-title text-center">
+                                    <!--if iscollapsed is true, it return faults/if it's faults it return true-->
+                                    <a href="" ng-click="isCollapsed = !isCollapsed">
+
+                                        <!--Results.length helps display the amount in the array-->
+                                        <span class="white bold">View Recalls&nbsp;&nbsp;({{carData.recalls.Results.length}})</span> <!--numbers of recalls-->
+
+                                    </a>
+                                </h3>
+                            </div>
+                            <div uib-collapse="isCollapsed">
+
+                                <div class="panel-body">
+                                    <div ng-repeat="recall in carData.recalls.Results">
+                                        <br />
+                                        <div class="bold" ng-show="recall.Manufacturer != null">
+                                            <div class="col-sm-3 text-primary text-right" style="color:red">
+                                                <b>Manufacturer:</b>
+                                            </div>
+                                            <div class="col-sm-9 text-left">{{recall.Manufacturer}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.NHTSACampaignNumber != null">
+                                            <div class="col-sm-3 text-primary text-right">NHTSACampaignNumber:</div>
+                                            <div class="col-sm-9 text-left">{{recall.NHTSACampaignNumber}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.ResportReceivedDate != null">
+                                            <div class="col-sm-3 text-primary text-right">ResportReceivedDate:</div>
+                                            <div class="col-sm-9 text-left">{{recall.ResportReceivedDate}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.Component != null">
+                                            <div class="col-sm-3 text-primary text-right">Component:</div>
+                                            <div class="col-sm-9 text-left">{{recall.Component}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.Summary != null">
+                                            <div class="col-sm-3 text-primary text-right">Summary:</div>
+                                            <div class="col-sm-9 text-left">{{recall.Summary}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.Conequence != null">
+                                            <div class="col-sm-3 text-primary text-right">Conequence:</div>
+                                            <div class="col-sm-9 text-left">{{recall.Conequence}}</div>
+                                        </div>
+                                        <div class="bold" ng-show="recall.Remedy != null">
+                                            <div class="col-sm-3 text-primary text-right">Remedy:</div>
+                                            <div class="col-sm-9 text-left">{{recall.Remedy}}</div>
+                                        </div>
+                                        <br />
+                                    </div>
+
+
+                                </div>
+                                <!--end of panel-->
+
+                            </div><!--end iscollapse-->
+                        </div> <!--end panel-->
+                    </div> <!--End row-->
+
+
                 </div>
             </div>
         </div>
